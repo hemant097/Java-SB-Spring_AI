@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: SpringAI
+  ai:
+#    openai:
+#      api-key: MY_API_KEY
+#      chat:
+#        options:
+#          model: gpt-4o-mini
+        ollama:
+          base-url: http://localhost:11434
+          chat:
+            options:
+              model: qwen3:4b
