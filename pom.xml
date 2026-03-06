@@ -37,10 +37,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-model-ollama</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-starter-model-ollama</artifactId>-->
+<!--        </dependency>-->
 
 
         <dependency>
@@ -54,9 +54,18 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-model-openai</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-google-genai</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-starter-model-openai</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
     <dependencyManagement>
         <dependencies>

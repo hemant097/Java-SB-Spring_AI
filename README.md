@@ -1,4 +1,4 @@
 #### Learning Spring AI
 
-* Ollama
-* OpenAI
+* Ollama with qwen3:4b, gemma3:4b
+* Google AI

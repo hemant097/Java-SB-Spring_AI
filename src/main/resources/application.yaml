@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: SpringAI
+  ai:
+    google:
+      genai:
+        api-key: ${google-ai-api-key}
+        chat:
+          options:
+            model: gemini-3-flash-preview
+            temperature: 0.9
+#    ollama:
+#      base-url: http://localhost:11434
+#      chat:
+#        options:
+#          model: qwen3:4b
+
