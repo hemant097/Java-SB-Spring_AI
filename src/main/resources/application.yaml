@@ -4,7 +4,12 @@ spring:
   ai:
     google:
       genai:
-        api-key: ${my-google-ai-api-key}
+        api-key: ${MY_GOOGLE_AI_API_KEY}
+        embedding:
+          api-key: ${MY_GOOGLE_AI_API_KEY}
+          text:
+            options:
+              model: gemini-embedding-001
         chat:
           options:
             model: gemini-3-flash-preview

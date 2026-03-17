@@ -58,10 +58,20 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+<!--        Google gen ai dependencies for chat and embedding-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-google-genai</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-google-genai-embedding</artifactId>
+        </dependency>
+
+<!--        OpenAI dependency-->
+
         <!--        <dependency>-->
 <!--            <groupId>org.springframework.ai</groupId>-->
 <!--            <artifactId>spring-ai-starter-model-openai</artifactId>-->

@@ -5,8 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -14,6 +18,7 @@ import java.util.Map;
 public class AIService {
 
     private final ChatClient chatClient;
+    private final EmbeddingModel embeddingModel;
 
     public String getJokeOnTopic(String topic){
 
@@ -44,4 +49,11 @@ public class AIService {
 
 
     }
+
+    public float[] embed(String text){
+        return embeddingModel.embed(text);
+    }
+
+
 }
+
