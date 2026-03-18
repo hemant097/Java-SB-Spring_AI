@@ -2,6 +2,11 @@ spring:
   application:
     name: SpringAI
   ai:
+#    ollama:
+#      base-url: http://localhost:11434
+#        chat:
+#          options:
+#            model: qwen3:4b
     google:
       genai:
         api-key: ${MY_GOOGLE_AI_API_KEY}
@@ -10,17 +15,24 @@ spring:
           text:
             options:
               model: gemini-embedding-001
+              dimensions: 1980
         chat:
           options:
             model: gemini-3-flash-preview
             temperature: 0.9
             thinking-budget: 128
 #            thinking-level: LOW
-#    ollama:
-#      base-url: http://localhost:11434
-#      chat:
-#        options:
-#          model: qwen3:4b
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/my_vector_db
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+
 logging:
   level:
     org.springframework.ai.chat.client: DEBUG
