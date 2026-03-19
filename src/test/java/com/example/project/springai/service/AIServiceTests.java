@@ -1,10 +1,14 @@
 package com.example.project.springai.service;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.TimeZone;
 
 @SpringBootTest
@@ -19,12 +23,14 @@ public class AIServiceTests {
     }
 
     @Test
+    @Disabled
     void getJoke(){
         String joke = aiService.getJokeOnTopic("Kangaroos");
         System.out.println(joke);
     }
 
     @Test
+    @Disabled
     void getEmbedding(){
         float[] floats = aiService.embed("Nice apartment in Delhi");
 
@@ -35,7 +41,16 @@ public class AIServiceTests {
     }
 
     @Test
+    @Disabled
     void storeData(){
-        aiService.ingestDataToVectorStore("This is a very big text");
+        aiService.ingestDataToVectorStore();
+    }
+
+    @Test
+    void testSimilaritySearch(){
+        List<Document> movies = aiService.similaritySearch("magician takes admission in a school");
+
+        for(Document movie : movies)
+            System.out.println(movie);
     }
 }
