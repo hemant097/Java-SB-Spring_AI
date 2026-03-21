@@ -2,7 +2,6 @@ package com.example.project.springai.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,13 @@ public class AIServiceTests {
     @BeforeAll
     static void changeTZ(){
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
+
+    @Test
+    @Disabled
+    void testAskAI(){
+        String ans = aiService.askAI("What is Apple");
+        System.out.println(ans);
     }
 
     @Test
@@ -47,6 +53,7 @@ public class AIServiceTests {
     }
 
     @Test
+//    @Disabled
     void testSimilaritySearch(){
         List<Document> movies = aiService.similaritySearch("magician takes admission in a school");
 
