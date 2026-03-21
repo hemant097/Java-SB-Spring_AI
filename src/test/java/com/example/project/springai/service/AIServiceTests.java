@@ -21,12 +21,6 @@ public class AIServiceTests {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
-    @Test
-    @Disabled
-    void testAskAI(){
-        String ans = aiService.askAI("What is Apple");
-        System.out.println(ans);
-    }
 
     @Test
     @Disabled

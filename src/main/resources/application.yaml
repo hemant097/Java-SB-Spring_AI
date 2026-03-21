@@ -18,7 +18,7 @@ spring:
               dimensions: 1980
         chat:
           options:
-            model: gemini-3-flash-preview
+            model: gemini-2.5-flash
             temperature: 0.9
             thinking-budget: 128
 #            thinking-level: LOW
