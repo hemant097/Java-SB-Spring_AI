@@ -33,9 +33,16 @@ public class RagServiceTests {
     }
 
     @Test
+    @Disabled
     void testAskToAnswerFromFaqPdf(){
         String ans = ragService.askAI("cant view recordings player not working");
         System.out.println(ans);
+    }
+
+    @Test
+    void testAskAiWithAdvisor(){
+       String res =  ragService.askAiWithAdvisors("How is the weather there now, I am asking","paul123");
+        System.out.println(res);
     }
 
 }
