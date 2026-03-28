@@ -41,7 +41,7 @@ public class RagServiceTests {
 
     @Test
     void testAskAiWithAdvisor(){
-       String res =  ragService.askAiWithAdvisors("How is the weather there now, I am asking","paul123");
+       String res =  ragService.askAiWithAdvisors("Who is Elon Musk ?","paul123");
         System.out.println(res);
     }
 

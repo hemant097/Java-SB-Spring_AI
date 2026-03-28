@@ -1,9 +1,12 @@
 package com.example.project.springai.service;
 
+import com.example.project.springai.advisor.TokenUsageAdvisor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.VectorStoreChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -92,13 +95,25 @@ public class RagService {
                 .system(systemPrompt)
                 .user(prompt)
                 .advisors(
+                        new SafeGuardAdvisor(List.of("godzilla","politics")),
+
                         MessageChatMemoryAdvisor.builder(chatMemory)
                                 .conversationId(userId)
-                                .build(),
+                                .build()
+                        ,
                         VectorStoreChatMemoryAdvisor.builder(vectorStore)
                                 .conversationId(userId)
                                 .defaultTopK(4)
                                 .build()
+                        ,
+                        QuestionAnswerAdvisor.builder(vectorStore)
+                                .searchRequest(SearchRequest.builder()
+                                        .topK(4)
+                                        .filterExpression("file_name == 'faq.pdf'")
+                                        .build())
+                                .build()
+                        ,
+                        new TokenUsageAdvisor()
                 )
                 .call()
                 .content();
