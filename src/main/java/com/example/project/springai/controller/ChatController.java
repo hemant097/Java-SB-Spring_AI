@@ -3,7 +3,7 @@ package com.example.project.springai.controller;
 
 import com.example.project.springai.service.AIService;
 import com.example.project.springai.tool.FlightBookingTool;
-import com.example.project.springai.tool.TravellingTools;
+import com.example.project.springai.tool.TravellingTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController {
 
     private final AIService aiService;
-    private final TravellingTools travellingTools;
+    private final TravellingTool travellingTool;
     private final FlightBookingTool bookingTool;
     private final ChatClient chatClient;
     private final ChatMemory chatMemory;
@@ -42,12 +42,30 @@ public class ChatController {
         return chatClient.prompt()
                 .system(systemPrompt)
                 .user(message)
-                .tools(travellingTools, bookingTool)
+                .tools(travellingTool, bookingTool)
                 .advisors(
                         MessageChatMemoryAdvisor.builder(chatMemory)
                                 .conversationId(userId)
                                 .build()
                 )
+                .call()
+                .content();
+    }
+
+    @GetMapping("/poem")
+    public String poem(@RequestParam String topic, @RequestParam(name = "lang", defaultValue = "english") String language){
+
+        String systemPrompt = """
+                You are a poet, with proficiency in many languages.
+                Generate a poem in not more than 4 lines.
+                Be a little sarcastic, and witty.
+                """;
+
+        String userPrompt = String.format("Generate a poem for me in language %s and on topic %s ", language, topic);
+
+        return chatClient.prompt()
+                .system(systemPrompt)
+                .user(userPrompt)
                 .call()
                 .content();
     }

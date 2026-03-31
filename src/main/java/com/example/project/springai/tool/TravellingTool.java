@@ -15,7 +15,7 @@ import org.springframework.web.client.RestClient;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TravellingTools {
+public class TravellingTool {
 
     private final RestClient restClient;
 
