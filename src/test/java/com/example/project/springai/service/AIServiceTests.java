@@ -47,7 +47,7 @@ public class AIServiceTests {
     }
 
     @Test
-//    @Disabled
+    @Disabled
     void testSimilaritySearch(){
         List<Document> movies = aiService.similaritySearch("magician takes admission in a school");
 

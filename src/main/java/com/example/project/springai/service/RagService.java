@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class RagService {
 
     private final ChatClient chatClient;
-    private final EmbeddingModel embeddingModel;
     private final VectorStore vectorStore;
     private final ChatMemory chatMemory;
 
@@ -131,6 +130,46 @@ public class RagService {
         //breaking each pages into multiple chunk with chunkSize defined above
         List<Document> chunks = splitter.apply(pages);
         vectorStore.add(chunks);
+    }
+
+    public String playListMatcher(String feeling){
+
+        String template = """
+                You are a friend and good listener.
+                If the user shares their thoughts and mood, suggest them, some song lyrics.
+                Not the entire song, but only few lines which are matching their vibe.
+                And they can associate with it. Give the song lines along with some explanation.
+                Also inform the user the details of the song. You are not bound to use only one song's lines.
+                If the thoughts are matching in many songs' lines. Suggest all of them.
+                
+                Use only the song lines in the context.
+                
+                Context:
+                {context}
+                
+                Answer in a friendly, conversational tone.
+                """;
+
+        List<Document> documents = vectorStore.similaritySearch(SearchRequest.builder()
+                .query(feeling)
+                .topK(4)
+                .similarityThreshold(0.5)
+                .filterExpression("artist != '' ")
+                .build());
+
+        String context = documents.stream()
+                .map(Document::getText)
+                .collect(Collectors.joining("\n\n"));
+
+        PromptTemplate promptTemplate = new PromptTemplate(template);
+
+        String systemPrompt = promptTemplate.render(Map.of("context",context));
+
+        return chatClient.prompt()
+                .system(systemPrompt)
+                .user(feeling)
+                .call()
+                .content();
     }
 
 }

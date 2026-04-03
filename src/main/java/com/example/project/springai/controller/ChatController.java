@@ -1,13 +1,16 @@
 package com.example.project.springai.controller;
 
 
+import com.example.project.springai.dto.Poem;
 import com.example.project.springai.service.AIService;
+import com.example.project.springai.service.RagService;
 import com.example.project.springai.tool.FlightBookingTool;
 import com.example.project.springai.tool.TravellingTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController {
 
     private final AIService aiService;
+    private final RagService ragService;
     private final TravellingTool travellingTool;
     private final FlightBookingTool bookingTool;
     private final ChatClient chatClient;
@@ -53,7 +57,7 @@ public class ChatController {
     }
 
     @GetMapping("/poem")
-    public String poem(@RequestParam String topic, @RequestParam(name = "lang", defaultValue = "english") String language){
+    public ResponseEntity<Poem> poem(@RequestParam String topic, @RequestParam(name = "lang", defaultValue = "english") String language){
 
         String systemPrompt = """
                 You are a poet, with proficiency in many languages.
@@ -63,11 +67,18 @@ public class ChatController {
 
         String userPrompt = String.format("Generate a poem for me in language %s and on topic %s ", language, topic);
 
-        return chatClient.prompt()
+        Poem poem =  chatClient.prompt()
                 .system(systemPrompt)
                 .user(userPrompt)
                 .call()
-                .content();
+                .entity(Poem.class);
+
+        return ResponseEntity.ok(poem);
+    }
+
+    @GetMapping("/match-vibe")
+    public ResponseEntity<String> poem(@RequestParam String feeling){
+        return ResponseEntity.ok(ragService.playListMatcher(feeling));
     }
 
 }
